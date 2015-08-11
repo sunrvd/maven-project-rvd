@@ -1,5 +1,10 @@
+import static org.junit.Assert.*;
+
 import org.junit.Test;
+import org.mule.api.MuleEvent;
 import org.mule.tck.junit4.FunctionalTestCase;
+
+import com.mchange.util.AssertException;
 
 
 public class HelloMavenTest extends FunctionalTestCase {
@@ -8,6 +13,13 @@ public class HelloMavenTest extends FunctionalTestCase {
 	public void sayHelloReturnsHelloMaven() throws Exception{
 		runFlowAndExpect("sayHellow", "Hello Maven");
 		
+	}
+	
+	@Test
+	public void retrieveFlightsAddsAppropriateHeader() throws Exception{
+		MuleEvent event = runFlow("retrieveFlights");
+		String contentType = event.getMessage().getOutboundProperty("Content=Type");
+		assertEquals("application/json",contentType);
 	}
 	
 	
